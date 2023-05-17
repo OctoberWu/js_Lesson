@@ -1,0 +1,28 @@
+
+<!DOCTYPE html>
+<html>
+<body>
+  
+<h1>The optgroup element</h1>
+<form action="/action_page.php">
+  <label for="food_chain">Choose an animal:</label>
+  <select name="food_chain" id="food_chain">
+    <optgroup label="Herbivores">
+      <option value="cow">Cow</option>
+      <option value="deer">Deer</option>
+    </optgroup>
+    <optgroup label="Carnivores">
+      <option value="tiger">Tiger</option>
+      <option value="lion">Lion</option>
+    </optgroup>
+    <optgroup label="Omnivores" disabled>
+      <option value="dog">Dog</option>
+      <option value="fox">Fox</option>
+    </optgroup>
+  </select>
+  <br><br>
+  <input type="submit" value="Submit">
+</form>
+   
+</body>
+</html>
