@@ -1,2 +1,2 @@
-### Primitive way to do Retry in Axios
-======================================
+Primitive way to do Retry in Axios
+==================================
