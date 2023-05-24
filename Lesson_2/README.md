@@ -1,3 +1,2 @@
-### Retry mechanism in Axios
-============================
-* axios, axios-retry. Note: retry-axios is deprecated
+### Primitive way to do Retry in Axios
+======================================
