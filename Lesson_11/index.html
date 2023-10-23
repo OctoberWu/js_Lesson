@@ -1,0 +1,127 @@
+<!doctype html>
+<html>
+
+<head>
+	<title>Network | Basic usage</title>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis-network.min.css" rel="stylesheet" type="text/css" />
+
+	<style type="text/css">
+		#mynetwork {
+			width: 1000px;
+			height: 400px;
+			border: 1px solid lightgray;
+		}
+	</style>
+</head>
+
+<body>
+
+	<div id="mynetwork"></div>
+
+	<script type="text/javascript">
+		// create an array with nodes
+		var nodes = new vis.DataSet([
+			// { id: 1, label: 'Node 1', shape: 'circularImage', image: "./image/tel.png" },//設置 圓形 頭像
+			{ id: 1, label: 'Node 1' },
+			{ id: 2, label: 'Node 2' },
+			{ id: 3, label: 'Node 3' },
+			{ id: 4, label: 'Node 4' },
+			{ id: 5, label: 'Node 5' }
+		]);
+
+		// create an array with edges
+		var edges = new vis.DataSet([
+			// { from: 1, to: 3, label: 'insurance', title: 'dsjkdjksa' }, //label：關係  title:鼠標滑過展示title
+			// { from: 3, to: 1, label: 'client' },
+			// { from: 3, to: 1, label: 'insurance' },
+			{ from: 1, to: 3, label: "top", font: { align: "top" } }, //label：關係  title:鼠標滑過展示title
+			{ from: 3, to: 1, label: "bottom", font: { align: "bottom" } },
+			{
+				from: 1, to: 2, label: "<<< >>>", font: {
+					size: 35,
+					color: "red",
+					face: "courier",
+					strokeWidth: 3,
+					strokeColor: "#ffffff",
+				},
+				title: "AMR heading"
+			},
+			{ from: 2, to: 4 },
+			{ from: 2, to: 5 }
+		]);
+
+		// create a network
+		var container = document.getElementById('mynetwork');
+		var data = {
+			nodes: nodes,
+			edges: edges
+		};
+		var options = {
+			edges: {
+				font: { align: "middle" },//關係線上 文字對其方式 top/horizontal/bottom
+				shadow: true, //連接線陰影配置
+				// smooth: true, //是否顯示方向箭頭
+				smooth: {
+					// type: 'diagonalCross', // curvedCW
+					// type: 'straightCross', // curvedCW
+					type: 'curvedCW', // curvedCW
+					roundness: .04,
+				},
+				arrows: {
+					from: true,
+					to: true
+				} //箭頭指向from節點
+			},
+			layout: {
+				improvedLayout: false //解決節點多，展示節點之間的關係
+			},
+			interaction: {
+				//鼠標經過改變樣式
+				hover: true
+				//設置禁止縮放
+				//zoomView:false
+			},
+			nodes: {
+				shape: "dot",
+				size: 30,
+				color: {
+					background: "#fff"
+				},
+				font: {
+					size: 16
+				},
+				borderWidth: 1,
+				shadow: false
+			},
+			physics: false,
+		};
+		var network = new vis.Network(container, data, options);
+		let stabilizedTimer;
+
+		network.on("stabilized", function (params) {
+			window.clearTimeout(stabilizedTimer);
+			stabilizedTimer = setTimeout(function () {
+				options.physics.enabled = false; // 開啓物理系統
+				network.setOptions(options);
+				// _this.loading = false;//監聽 圖繪製完 =》取消loading效果
+			}, 200);
+		});
+
+		network.on("dragEnd", function (params) {
+			if (params.nodes && params.nodes.length > 0) {
+				// false 拖拽之後固定位置
+				network.clustering.updateClusteredNode(params.nodes[0], { physics: false });
+			}
+		});
+
+		// 點擊事件
+		network.on("click", function (params) {
+			const id = params.nodes;
+		});
+	</script>
+
+
+</body>
+
+</html>

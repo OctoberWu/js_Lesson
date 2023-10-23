@@ -1,0 +1,15 @@
+body {
+  font-family: sans-serif;
+}
+
+/* for demo purposes */
+input {
+  border: solid 3px;
+  padding: 1rem;
+  font-size: 1.6rem;
+}
+
+h1 {
+  font-family: "Playfair Display", serif;
+  font-size: 3rem;
+}
